@@ -4,31 +4,30 @@
 
 ### Repository overview
 
-This is a greenfield monorepo scaffold (`reg-product-v1`) with three intended service directories and a docs folder. As of the initial setup, **all files are empty placeholders**; there is no source code, configuration, or dependency manifests yet.
+This is a monorepo (`reg-product-v1`) with three service directories and a docs folder.
 
-| Directory | Intended purpose |
-|-----------|-----------------|
-| `app/` | Frontend application (likely Next.js or similar) |
-| `workers/` | Background workers (likely Cloudflare Workers or similar) |
-| `supabase/` | Supabase backend (Postgres, Auth, Edge Functions) |
+| Directory | Purpose |
+|-----------|---------|
+| `app/` | Next.js 15 frontend (App Router, TypeScript) |
+| `workers/` | Background workers (placeholder, not yet scaffolded) |
+| `supabase/` | Supabase backend (placeholder, not yet scaffolded) |
 | `docs/` | Architecture and product documentation |
 
-### Tooling available in the VM
+### App service (`app/`)
 
-- **Node.js** v22 (via nvm)
-- **pnpm** v10 (global install via nvm)
-- **npm** v10, **npx** v10
-- **git** v2.43
+- **Package manager:** npm (lockfile: `app/package-lock.json`)
+- **Framework:** Next.js 15 with App Router, React 19, TypeScript
+- **Build output:** `standalone` mode (for Render / containerized deployment)
+- **Source:** `app/src/app/` (layout, pages)
 
-### Development environment status
+| Command | Working directory | Description |
+|---------|-------------------|-------------|
+| `npm run dev` | `app/` | Start dev server (port 3000) |
+| `npm run build` | `app/` | Production build |
+| `npm run start` | `app/` | Start production server |
+| `npm run lint` | `app/` | Run ESLint via next lint |
 
-No `package.json` or dependency manifests exist yet, so there is nothing to install, build, lint, or test. Once code is scaffolded:
+### Caveats
 
-- Prefer `pnpm` as the package manager (already available).
-- Run `pnpm install` from the workspace root (or per-package) after a `package.json` is added.
-- Supabase local development will likely require `supabase` CLI (`npx supabase`) and Docker.
-- Workers development may require `wrangler` CLI.
-
-### Lint / Test / Build / Run
-
-No commands are available yet. When they are added, check `package.json` `scripts` for standard commands (`dev`, `build`, `lint`, `test`).
+- `next lint` prints a deprecation warning (will be removed in Next.js 16). It still works; no action needed now.
+- TypeScript types (`@types/react`, `@types/node`) are auto-installed on first lint/build if missing, but are already in devDependencies.
