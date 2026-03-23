@@ -1,0 +1,7 @@
+{
+  "name": "reg-product-v1",
+  "private": true,
+  "scripts": {
+    "validate": "bash ./scripts/validate.sh"
+  }
+}

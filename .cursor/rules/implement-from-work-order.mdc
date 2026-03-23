@@ -1,0 +1,19 @@
+---
+description: Enforce implementation from approved open work orders
+globs:
+  - "**/*"
+alwaysApply: true
+---
+
+# implement-from-work-order
+
+You must follow this process for implementation tasks in this repository:
+
+1. Implement only from files in `work-orders/open/`.
+2. Start by inspecting the newest approved work order in `work-orders/open/` before making code changes.
+3. Implement only the scope defined in that work order; keep changes minimal and targeted.
+4. Never commit secrets, credentials, tokens, or private keys into the repository.
+5. Run available validation/tests relevant to the changed area before proposing commit/push.
+6. Show a diff of all changes before finalizing your response.
+7. When implementation is complete, move the completed work order file from `work-orders/open/` to `work-orders/done/`.
+8. If repository structure changes, update `docs/repo-map.md` as part of the same work.
