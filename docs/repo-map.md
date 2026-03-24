@@ -6,7 +6,7 @@
 - `workers/` - Background worker services (currently includes `orchestrator/`).
 - `supabase/` - Supabase backend area (currently placeholder docs only).
 - `docs/` - Product and architecture documentation.
-- `.github/` - GitHub automation metadata (issue templates and workflows).
+- `.github/` - GitHub automation metadata (workflows).
 - `work-orders/` - Two-layer workflow work orders (`open/` and `done/`).
 - `scripts/` - Repo-level helper scripts (includes validation entrypoint).
 - `AGENTS.md` - Cursor Cloud instructions for repository workflows and testing.
@@ -53,8 +53,7 @@
 
 ## Automation-related files
 
-- `.github/ISSUE_TEMPLATE/work_order.yml` defines the structured `[Work Order]` issue form.
-- `.github/workflows/dispatch-cursor-on-new-work-order.yml` posts a Cursor handoff comment when a matching issue is opened.
+- `.github/workflows/dispatch-cursor-from-work-order-file.yml` watches `work-orders/open/*.md` updates on `main`, creates `[Work Order]` issues from file content, and posts the Cursor implementation handoff comment.
 - `.cursor/rules/project-workflow.mdc` captures implementation guardrails for Cursor.
 
 ## Supabase-related files
@@ -74,4 +73,4 @@
 - No automated tests present for `app/` or `workers/orchestrator/`.
 - No deployment manifests (Render/Docker/CI) detected.
 - No Supabase project scaffolding yet (schema/migrations/functions/config).
-- `work-orders/open/` and `work-orders/done/` are process scaffolding and currently start empty.
+- `work-orders/open/` and `work-orders/done/` are process scaffolding for file-based handoff and currently start empty.

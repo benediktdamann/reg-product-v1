@@ -1,0 +1,68 @@
+name: Dispatch Cursor from Work Order File
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "work-orders/open/*.md"
+
+jobs:
+  create-issue-and-dispatch-cursor:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create issue(s) from changed work-order files and comment for Cursor
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          BEFORE_SHA: ${{ github.event.before }}
+          AFTER_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+
+          # Compare changed files in this push and keep only markdown files in work-orders/open/.
+          if [ "$BEFORE_SHA" = "0000000000000000000000000000000000000000" ]; then
+            changed_files="$(git diff-tree --no-commit-id --name-only -r "$AFTER_SHA")"
+          else
+            changed_files="$(git diff --name-only "$BEFORE_SHA" "$AFTER_SHA")"
+          fi
+
+          mapfile -t work_order_files < <(printf '%s\n' "$changed_files" | awk '/^work-orders\/open\/[^/]+\.md$/')
+
+          if [ "${#work_order_files[@]}" -eq 0 ]; then
+            echo "No changed markdown work-order files found."
+            exit 0
+          fi
+
+          for work_order_file in "${work_order_files[@]}"; do
+            # Skip deleted files (change list can include removed files).
+            if [ ! -f "$work_order_file" ]; then
+              echo "Skipping missing file: $work_order_file"
+              continue
+            fi
+
+            heading_title="$(awk '/^# / { sub(/^# /, ""); print; exit }' "$work_order_file")"
+            if [ -n "$heading_title" ]; then
+              base_title="$heading_title"
+            else
+              filename_title="$(basename "$work_order_file" .md | sed -E 's/[_-]+/ /g; s/[[:space:]]+/ /g; s/^ //; s/ $//')"
+              base_title="$(printf '%s\n' "$filename_title" | awk '{for (i = 1; i <= NF; i++) $i = toupper(substr($i, 1, 1)) substr($i, 2); print}')"
+            fi
+
+            issue_title="[Work Order] $base_title"
+            echo "Creating issue for $work_order_file with title: $issue_title"
+
+            issue_url="$(gh issue create --repo "$REPO" --title "$issue_title" --body-file "$work_order_file")"
+            issue_number="${issue_url##*/}"
+
+            comment_body=$'@cursor Read the full issue carefully and implement exactly the requested scope in this repository.\nCreate a new branch.\nMake minimal, safe changes only.\nRespect existing Supabase and Render setup.\nOpen a pull request for review.\nDo not merge.'
+            gh issue comment "$issue_number" --repo "$REPO" --body "$comment_body"
+          done
