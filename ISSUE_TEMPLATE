@@ -1,0 +1,50 @@
+# .github/ISSUE_TEMPLATE/work_order.yml
+name: Work Order
+description: Structured implementation request for Cursor
+title: "[Work Order] "
+labels: []
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+      description: What should be achieved?
+      placeholder: Describe the business/technical goal.
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: What is in scope?
+      placeholder: List what Cursor should implement.
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance Criteria
+      description: What must be true when done?
+      placeholder: Bullet points with testable criteria.
+    validations:
+      required: true
+
+  - type: textarea
+    id: technical_notes
+    attributes:
+      label: Technical Notes
+      description: Repo-specific notes, Supabase/Render constraints, existing files, etc.
+      placeholder: Add architecture or implementation notes.
+    validations:
+      required: false
+
+  - type: textarea
+    id: out_of_scope
+    attributes:
+      label: Out of Scope
+      description: What should explicitly not be changed?
+      placeholder: List excluded areas.
+    validations:
+      required: false
