@@ -1,0 +1,13 @@
+# project-workflow
+
+Implementation workflow rules for this repository:
+
+1. Cursor is the only implementation agent for this repository.
+2. Start implementation work from GitHub work orders.
+3. Keep changes minimal, targeted, and safe.
+4. Respect the existing Supabase and Render setup.
+5. Never commit secrets, credentials, tokens, or private keys.
+6. Always show a diff before finalizing work.
+7. Always open a pull request for review.
+8. Never merge directly from implementation work.
+9. Do not invent new architecture unless explicitly requested.
