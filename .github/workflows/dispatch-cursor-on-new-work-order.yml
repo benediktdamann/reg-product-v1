@@ -1,0 +1,27 @@
+name: Dispatch Cursor on New Work Order
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  dispatch-cursor:
+    if: startsWith(github.event.issue.title, '[Work Order]')
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Post Cursor handoff comment
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          gh issue comment "$ISSUE_NUMBER" --repo "$REPO" --body-file - <<'EOF'
+          @cursor Read the full issue carefully and implement exactly the requested scope in this repository.
+          Create a new branch.
+          Make minimal, safe changes only.
+          Respect existing Supabase and Render setup.
+          Open a pull request for review.
+          Do not merge.
+          EOF

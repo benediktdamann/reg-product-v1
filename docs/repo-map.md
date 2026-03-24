@@ -6,9 +6,11 @@
 - `workers/` - Background worker services (currently includes `orchestrator/`).
 - `supabase/` - Supabase backend area (currently placeholder docs only).
 - `docs/` - Product and architecture documentation.
+- `.github/` - GitHub automation metadata (issue templates and workflows).
 - `work-orders/` - Two-layer workflow work orders (`open/` and `done/`).
 - `scripts/` - Repo-level helper scripts (includes validation entrypoint).
 - `AGENTS.md` - Cursor Cloud instructions for repository workflows and testing.
+- `.cursor/rules/` - Cursor project and workspace rule definitions.
 
 ## Major parts and what they do
 
@@ -40,12 +42,20 @@
 ### `docs/`
 
 - Product and architecture documents exist but many files are currently placeholders.
+- Includes `automation-workflow.md` describing GitHub-to-Cursor handoff steps.
 
 ## Deployment-related files
 
 - `app/next.config.mjs` - Next.js standalone output (deployment-friendly build artifact mode).
 - `app/package.json` scripts include `build` and `start`.
 - No root-level Docker, Compose, CI, or deployment manifests found.
+- No `render.yaml` file is present in the repository.
+
+## Automation-related files
+
+- `.github/ISSUE_TEMPLATE/work_order.yml` defines the structured `[Work Order]` issue form.
+- `.github/workflows/dispatch-cursor-on-new-work-order.yml` posts a Cursor handoff comment when a matching issue is opened.
+- `.cursor/rules/project-workflow.mdc` captures implementation guardrails for Cursor.
 
 ## Supabase-related files
 
