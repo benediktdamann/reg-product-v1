@@ -6,6 +6,7 @@
 - `workers/` - Background worker services (currently includes `orchestrator/`).
 - `supabase/` - Supabase backend area (currently placeholder docs only).
 - `docs/` - Product and architecture documentation.
+- `README.md`, `PRODUCT.md`, `ARCHITECTURE.md`, `ROADMAP.md`, `TASKS.md` - Root-level operating docs.
 - `.github/` - GitHub automation metadata (issue templates and workflows).
 - `work-orders/` - Two-layer workflow work orders (`open/` and `done/`).
 - `scripts/` - Repo-level helper scripts (includes validation entrypoint).
@@ -43,6 +44,10 @@
 
 - Product and architecture documents exist but many files are currently placeholders.
 - Includes `automation-workflow.md` describing GitHub-to-Cursor handoff steps.
+- Includes operating standards:
+  - `docs/work-orders/template.md`
+  - `docs/qa-checklist.md`
+  - `docs/agent-rules.md`
 
 ## Deployment-related files
 
@@ -69,9 +74,9 @@
 
 ## Missing pieces / setup gaps
 
-- No non-empty README coverage for `supabase/`, `workers/`, and most docs files.
+- No substantive service-level docs yet in `supabase/README.md` and `workers/README.md` (both placeholders).
 - No centralized root validation script existed before this setup (now added via `scripts/validate.sh` + root `npm run validate`).
 - No automated tests present for `app/` or `workers/orchestrator/`.
 - No deployment manifests (Render/Docker/CI) detected.
 - No Supabase project scaffolding yet (schema/migrations/functions/config).
-- `work-orders/open/` and `work-orders/done/` are process scaffolding and currently start empty.
+- `work-orders/open/` and `work-orders/done/` are process scaffolding and currently contain only `.gitkeep`.
